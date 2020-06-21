@@ -10,5 +10,5 @@ import java.util.Optional;
  */
 public interface StorageRepository extends JpaRepository<Storage, Integer> {
 
-    Optional<Storage> findFirstByMd5(String md5);
+    Optional<Storage> findByMd5(String md5);
 }

@@ -4,10 +4,12 @@ import com.zsc.web.config.StorageProperties;
 import com.zsc.web.domain.Storage;
 import com.zsc.web.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.FileUrlResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -55,7 +57,7 @@ public class FileController {
             e.printStackTrace();
         }
         String md5 = bi.toString(16);
-        Storage storage = storageService.findFirstByMd5(md5).orElse(null);
+        Storage storage = storageService.findByMd5(md5);
         if (storage == null) {
             try {
                 File files = new File(path, md5);
@@ -70,5 +72,14 @@ public class FileController {
             storageService.save(storage);
         }
         return md5;
+    }
+
+    @GetMapping(value = "/download/{id}")
+    public ResponseEntity<Resource> download(@PathVariable String id) throws Exception{
+        Storage storage = storageService.findByMd5(id);
+        return ResponseEntity.ok().header(
+                HttpHeaders.CONTENT_DISPOSITION,
+                String.format("attachment; filename=\"%s\"", storage.getOriginalFilename())
+        ).body(new FileUrlResource(path+id));
     }
 }

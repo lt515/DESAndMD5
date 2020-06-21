@@ -18,8 +18,8 @@ public class StorageService {
         this.storageRepository = storageRepository;
     }
 
-    public Optional<Storage> findFirstByMd5(String md5){
-        return storageRepository.findFirstByMd5(md5);
+    public Storage findByMd5(String md5){
+        return storageRepository.findByMd5(md5).orElse(null);
     }
 
     public Storage save(Storage storage){
