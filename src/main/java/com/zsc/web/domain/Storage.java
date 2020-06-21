@@ -1,6 +1,7 @@
 package com.zsc.web.domain;
 
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @Entity
+@Accessors(chain = true)
 public class Storage implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

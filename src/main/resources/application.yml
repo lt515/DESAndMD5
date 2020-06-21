@@ -19,3 +19,6 @@ spring:
       enabled: true
     freemarker:
       cache: false
+
+storage:
+  location: f://upload/Downloads/DESAndMD5/

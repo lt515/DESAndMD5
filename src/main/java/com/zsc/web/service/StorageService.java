@@ -1,7 +1,10 @@
 package com.zsc.web.service;
 
+import com.zsc.web.domain.Storage;
 import com.zsc.web.repository.StorageRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author Abouerp
@@ -15,5 +18,12 @@ public class StorageService {
         this.storageRepository = storageRepository;
     }
 
+    public Optional<Storage> findFirstByMd5(String md5){
+        return storageRepository.findFirstByMd5(md5);
+    }
+
+    public Storage save(Storage storage){
+        return storageRepository.save(storage);
+    }
 
 }
