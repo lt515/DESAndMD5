@@ -12,10 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -28,12 +32,24 @@ import java.security.NoSuchAlgorithmException;
 public class FileController {
 
     private final StorageService storageService;
-    private final String path;
+    private final Path path;
 
     public FileController(StorageService storageService,
                           StorageProperties storageProperties) {
         this.storageService = storageService;
-        this.path = storageProperties.getLocation();
+        this.path = Paths.get(storageProperties.getLocation());
+    }
+
+    @PostConstruct
+    public void init() {
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            if (log.isErrorEnabled()) {
+                log.error(e.getMessage());
+            }
+        }
+        log.info("file storage path = {}", path.toString());
     }
 
     @PostMapping
@@ -60,9 +76,12 @@ public class FileController {
         Storage storage = storageService.findByMd5(md5);
         if (storage == null) {
             try {
-                File files = new File(path, md5);
+
+                Path p = Paths.get(path.toString()+"/"+md5);
+                File files = p.toFile();
                 file.transferTo(files);
             }catch (IOException e){
+                e.printStackTrace();
                 log.info("file save error ...");
             }
             storage = new Storage()
@@ -80,6 +99,6 @@ public class FileController {
         return ResponseEntity.ok().header(
                 HttpHeaders.CONTENT_DISPOSITION,
                 String.format("attachment; filename=\"%s\"", storage.getOriginalFilename())
-        ).body(new FileUrlResource(path+id));
+        ).body(new FileUrlResource(path.toString()+"/"+id));
     }
 }
