@@ -14,28 +14,31 @@ $("#sigin").click(function () {
 
 
 $("#for-login").click(function () {
-    console.log("hahah");
     var username = $("#login-un").val();
     var password = $("#login-pwd").val();
-    $.ajax({
-        type: "Get",
-        url: "/user/login",
-        data: {
-            username: username,
-            password: password
-        },
-        success(res) {
+    console.log(username + " " + password);
+    if (username && password) {
+        $.ajax({
+            type: "POST",
+            url: "/user/login",
+            data: {
+                username: username,
+                password: password
+            },
+            success(res) {
 
-        }
-    })
+            }
+        })
+    }
 });
 
 $("#for-sigin").click(function () {
     var username = $("#sigin-un").val();
     var password = $("#sigin-pwd").val();
+    console.log(username + " " + password);
     if (username && password) {
         $.ajax({
-            type: "Get",
+            type: "POST",
             url: "/user/register",
             data: {
                 username: username,
