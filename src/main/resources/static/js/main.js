@@ -25,9 +25,14 @@ $("#for-login").click(function () {
                 username: username,
                 password: password
             },
-            success(res) {
-
-            }
+            success: function (res) {
+                if(res=="success"){
+                    window.location.href="/file";
+                }else{
+                    alert("账号或密码错误！");
+                    window.location.reload();
+                }
+            },
         })
     }
 });
@@ -44,9 +49,7 @@ $("#for-sigin").click(function () {
                 username: username,
                 password: password
             },
-            success(res) {
 
-            }
         })
     }
 });

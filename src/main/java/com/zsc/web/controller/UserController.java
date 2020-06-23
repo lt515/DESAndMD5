@@ -30,9 +30,9 @@ public class UserController {
         return "error";
     }
 
-    @PostMapping("/regist")
+    @PostMapping("/register")
     @ResponseBody
-    public User regist(User user) throws Exception {
+    public User register(User user) throws Exception {
         user.setPassword(DESUtil.encryption(user.getPassword(), key));
         return userService.regist(user);
     }

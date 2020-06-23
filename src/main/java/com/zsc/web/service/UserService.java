@@ -17,7 +17,7 @@ public class UserService {
     }
 
     public boolean login(User user,User u,String key) throws Exception {
-        if(DESUtil.decryption(u.getPassword(),key) == user.getPassword()){
+        if(DESUtil.decryption(u.getPassword(),key).equals(user.getPassword())){
             return true;
         }
         return false;
