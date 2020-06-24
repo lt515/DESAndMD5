@@ -6,6 +6,9 @@ import com.zsc.web.service.StorageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileUrlResource;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -103,5 +106,11 @@ public class FileController {
                 HttpHeaders.CONTENT_DISPOSITION,
                 String.format("attachment; filename=\"%s\"", storage.getOriginalFilename())
         ).body(new FileUrlResource(path.toString()+"/"+id));
+    }
+
+    @ResponseBody
+    @GetMapping
+    public Page<Storage> findAll(@PageableDefault Pageable pageable){
+        return storageService.findAll(pageable);
     }
 }
