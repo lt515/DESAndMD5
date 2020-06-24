@@ -62,16 +62,19 @@ public class FileController {
             MessageDigest md = MessageDigest.getInstance("MD5");
             InputStream inputStream = file.getInputStream();
             while ((len = inputStream.read(buffer)) != -1) {
+                //利用指定的字节更新摘要
                 md.update(buffer, 0, len);
             }
             inputStream.close();
             byte[] b = md.digest();
+            //将字节数组b 转化为bigInteger形式，
             bi = new BigInteger(1, b);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        //将bigInteger转为16位数的hash值
         String md5 = bi.toString(16);
         Storage storage = storageService.findByMd5(md5);
         if (storage == null) {
