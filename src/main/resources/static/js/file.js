@@ -13,6 +13,9 @@ $("#upload").click(function () {
             contentType: false,
             success(res) {
                 addfile(filename, res);
+            },
+            error() {
+                alert("请上传文件大小10MB以内的文件！");
             }
         })
     }
