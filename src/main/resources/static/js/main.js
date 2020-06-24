@@ -49,7 +49,9 @@ $("#for-sigin").click(function () {
                 username: username,
                 password: password
             },
-
+            success(res) {
+                alert("用户创建成功！");
+            }
         })
     }
 });
