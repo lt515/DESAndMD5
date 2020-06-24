@@ -25,6 +25,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 /**
  * @author Abouerp
@@ -110,7 +111,7 @@ public class FileController {
 
     @ResponseBody
     @GetMapping
-    public Page<Storage> findAll(@PageableDefault Pageable pageable){
-        return storageService.findAll(pageable);
+    public List<Storage> findAll(){
+        return storageService.findAll();
     }
 }
