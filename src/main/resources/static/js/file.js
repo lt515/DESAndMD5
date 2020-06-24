@@ -1,3 +1,20 @@
+$(function () {
+    $.ajax({
+        type: "GET",
+        url: "/file-operator",
+        success: function (res) {
+            for (let i = 0; i < res.length; i++) {
+                let filename = res[i].originalFilename;
+                let md5 = res[i].md5;
+                addfile(filename, md5);
+            }
+        },
+        error: function () {
+            alert("加载历史文件失败！");
+        }
+    })
+});
+
 $("#upload").click(function () {
     let files = $('#file').prop('files');
     if (files[0]) {
@@ -32,5 +49,5 @@ $("#choose").click(function () {
 
 function addfile(filename, md5) {
     let item = "<div class='file'><a href='/file-operator/download/" + md5 + "'>" + filename + "</a></div>"
-    $("#filebody").append(item);
+    $("#filebody").prepend(item);
 }
