@@ -1,6 +1,10 @@
 server:
   port: 8000
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
   datasource:
     url: jdbc:mysql://localhost/system?useSSL=false&createDatabaseIfNotExist=true&characterEncoding=utf8&serverTimezone=Hongkong
     username: root
