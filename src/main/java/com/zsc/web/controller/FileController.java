@@ -105,7 +105,7 @@ public class FileController {
         Storage storage = storageService.findByMd5(id);
         return ResponseEntity.ok().header(
                 HttpHeaders.CONTENT_DISPOSITION,
-                String.format("attachment; filename=\"%s\"", storage.getOriginalFilename())
+                String.format("attachment; filename=\"%s\"", new String(storage.getOriginalFilename().getBytes("utf-8"),"ISO8859-1"))
         ).body(new FileUrlResource(path.toString()+"/"+id));
     }
 
