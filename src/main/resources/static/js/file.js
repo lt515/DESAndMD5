@@ -1,5 +1,5 @@
 $("#upload").click(function () {
-    var files = $('#file').prop('files');
+    let files = $('#file').prop('files');
     if (files[0]) {
         var filename = files[0].name;
         var data = new FormData();
@@ -31,6 +31,6 @@ $("#choose").click(function () {
 });
 
 function addfile(filename, md5) {
-    item = "<div class='file'><a href='/file-operator/download/" + md5 + "'>" + filename + "</a></div>"
+    let item = "<div class='file'><a href='/file-operator/download/" + md5 + "'>" + filename + "</a></div>"
     $("#filebody").append(item);
 }
