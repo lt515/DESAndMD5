@@ -43,6 +43,7 @@ body {
     background-color: #4ba2ee;
     color: #fff;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .filebody {

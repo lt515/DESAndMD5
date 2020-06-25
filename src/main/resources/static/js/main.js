@@ -52,7 +52,7 @@ $("#user-sigin").click(function () {
                 username: username,
                 password: password
             },
-            success(res) {
+            success() {
                 alert("用户创建成功！");
                 window.location.reload();
             }
