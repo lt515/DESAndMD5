@@ -2,12 +2,9 @@ package com.zsc.web.service;
 
 import com.zsc.web.domain.Storage;
 import com.zsc.web.repository.StorageRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author Abouerp
