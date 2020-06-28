@@ -84,6 +84,7 @@ public class FileController {
         }
         //将bigInteger转为string，得到一个32位字符串
         String md5 = bi.toString(16);
+        log.info("文件的md5值为 = {}", md5);
         //在数据库中查询这个md5值是否存在，如果存在，则说明这个文件上传过，如果不存在，
         //则将文件的原始名称，文件格式，文件md5值保存到数据库，实现服务器端的资源节约，避免重复文件占用资源
         Storage storage = storageService.findByMd5(md5);
@@ -105,6 +106,7 @@ public class FileController {
                     .setContentType(file.getContentType())
                     .setMd5(md5)
                     .setOriginalFilename(file.getOriginalFilename());
+            log.info("文件属性已保存至数据库");
             //将上面的文件对象属性值存储在数据库里面
             storageService.save(storage);
         }
