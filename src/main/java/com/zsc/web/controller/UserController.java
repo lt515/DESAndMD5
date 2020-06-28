@@ -34,6 +34,7 @@ public class UserController {
     @ResponseBody
     public User register(User user) throws Exception {
         user.setPassword(DESUtil.encryption(user.getPassword(), key));
+        System.out.println("密码已完成加密并保存至数据库");
         return userService.regist(user);
     }
 

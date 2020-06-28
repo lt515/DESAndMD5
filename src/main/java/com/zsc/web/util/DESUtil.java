@@ -19,10 +19,13 @@ public class DESUtil {
      * @throws Exception
      */
     public static String encryption(String plainData, String secretKey) throws Exception {
-
+        System.out.println("正在进行DES加密");
+        //利用Cipher类完成des加密
         Cipher cipher = null;
         try {
+            //获取Cipher类的对象
             cipher = Cipher.getInstance(DES_ALGORITHM);
+            //Cipher对象初始化，参数分别为：ENCRYPT_MODE加密模式、密匙
             cipher.init(Cipher.ENCRYPT_MODE, generateKey(secretKey));
 
         } catch (NoSuchAlgorithmException e) {
@@ -30,15 +33,12 @@ public class DESUtil {
         } catch (NoSuchPaddingException e) {
             e.printStackTrace();
         } catch (InvalidKeyException e) {
-
         }
-
         try {
             // 为了防止解密时报javax.crypto.IllegalBlockSizeException: Input length must
-            // be multiple of 8 when decrypting with padded cipher异常，
-            // 不能把加密后的字节数组直接转换成字符串
+            // be multiple of 8 when decrypting with padded cipher异常，不能把加密后的字节数组直接转换成字符串
             byte[] buf = cipher.doFinal(plainData.getBytes());
-
+            //将原始数据编码为base64编码
             return Base64Utils.encode(buf);
 
         } catch (IllegalBlockSizeException e) {
@@ -48,7 +48,6 @@ public class DESUtil {
             e.printStackTrace();
             throw new Exception("BadPaddingException", e);
         }
-
     }
 
 
@@ -60,10 +59,13 @@ public class DESUtil {
      * @throws Exception
      */
     public static String decryption(String secretData, String secretKey) throws Exception {
-
+        System.out.println("正在进行DES解密");
+        //利用Cipher类完成dee解密
         Cipher cipher = null;
         try {
+            //获取Cipher类的对象
             cipher = Cipher.getInstance(DES_ALGORITHM);
+            //Cipher对象初始化，参数分别为：DECRYPT_MODE解密模式、密匙
             cipher.init(Cipher.DECRYPT_MODE, generateKey(secretKey));
 
         } catch (NoSuchAlgorithmException e) {
@@ -75,15 +77,11 @@ public class DESUtil {
         } catch (InvalidKeyException e) {
             e.printStackTrace();
             throw new Exception("InvalidKeyException", e);
-
         }
-
         try {
-
+            //Base64Utils.decode()将base64编码的数据解码成原始数据
             byte[] buf = cipher.doFinal(Base64Utils.decode(secretData.toCharArray()));
-
             return new String(buf);
-
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
             throw new Exception("IllegalBlockSizeException", e);

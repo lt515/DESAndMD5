@@ -18,6 +18,7 @@ public class UserService {
 
     public boolean login(User user,User u,String key) throws Exception {
         if(DESUtil.decryption(u.getPassword(),key).equals(user.getPassword())){
+            System.out.println("密码校验成功");
             return true;
         }
         return false;
