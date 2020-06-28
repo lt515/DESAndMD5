@@ -59,6 +59,7 @@ public class FileController {
     public String upload(MultipartFile file) {
         BigInteger bi = null;
         try {
+            //创建缓冲字节数组
             byte[] buffer = new byte[8192];
             int len = 0;
             /**
@@ -68,6 +69,7 @@ public class FileController {
             MessageDigest md = MessageDigest.getInstance("MD5");
             //获得上传文件的输入流
             InputStream inputStream = file.getInputStream();
+            //循环读取文件的字节流
             while ((len = inputStream.read(buffer)) != -1) {
                 //利用指定的字节执行摘要更新
                 md.update(buffer, 0, len);
